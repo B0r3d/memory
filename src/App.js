@@ -21,12 +21,9 @@ const Global = createGlobalStyle`
 export default () => {
   const [ flippedTile, setFlippedTile ] = useState(null);
 
-  const flipTile = useCallback((tile) => {
-      if(tile === flippedTile) {
-        return;
-      }
-      setFlippedTile(tile);
-  });
+  const flipTile = tile => {
+    setFlippedTile(tile);
+  };
 
   return (
     <>
