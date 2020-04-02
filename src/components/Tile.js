@@ -1,21 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import GameConstants from '../constants/GameConstants';
 
-export default ({ tile }) => {
+const flipDuration = 800;
+
+export default ({ tile, isFlipped, onClick }) => {
+  const TileWrapper = styled.div`
+    flex: 0 0 100px;
+    border: 1px solid #f1f1f1;
+  `
   const TileInner = styled.div`
     padding-top: 100%;
     position: relative;
     text-align: center;
-    transition: transform 0.8s;
+    transition: transform ${ flipDuration }ms;
     transform-style: preserve-3d;
-  `
-  const TileWrapper = styled.div`
-    flex: 0 0 100px;
-    border: 1px solid #f1f1f1;
-    &:hover ${TileInner} {
-      transform: rotateY(180deg);
-    }
+    transform: ${({ isFlipped }) => isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'};
   `
   const BaseTile = styled.div`
     position: absolute;
@@ -52,18 +51,18 @@ export default ({ tile }) => {
   `
   return (
     <TileWrapper>
-      <TileInner>
-        <FrontTile>
-          <IconHolder>
-            <img src="/images/questionmark.png" alt="React"/>
-          </IconHolder>
-        </FrontTile>
-        <BackTile>
-          <IconHolder>
-            <img src={ tile.img } alt="React"/>
-          </IconHolder>
-        </BackTile>
-      </TileInner>
+        <TileInner isFlipped={ isFlipped }>
+          <FrontTile onClick={ () => onClick(tile) }>
+            <IconHolder>
+              <img src="/images/questionmark.png" alt="React"/>
+            </IconHolder>
+          </FrontTile>
+          <BackTile>
+            <IconHolder>
+              <img src={ tile.img } alt="React"/>
+            </IconHolder>
+          </BackTile>
+        </TileInner>
     </TileWrapper>
   )
 }
